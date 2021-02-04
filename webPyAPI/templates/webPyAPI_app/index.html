@@ -57,6 +57,14 @@
             margin:auto;
             cursor: pointer;
           }
+          select {
+               width: 250px;
+               margin: 10px;
+         }
+               select:focus {
+                    min-width: 150px;
+                    width: auto;
+               }
      </style>
 </head>
 
@@ -65,6 +73,9 @@
   <p style="text-align: left; padding-left: 20px;">{% trans " Template project for visualization of World Bank API data" %}</p>
 </div>
 
+
+<h3 style="text-align: left; padding-left: 20px;">Overview of World Bank API database</h3>
+<br>
 <div class="col-sm-12">
 <table style=margin-left:auto;margin-right:auto;">
  <tr>
@@ -81,14 +92,41 @@
  </tr>
  <tr>
     <td><strong>{% trans "Number of countries" %}</strong></td>
-    <td>{{daily_production}}</sup></td>
+    <td>{{numb_countries}}</td>
     <td><strong>{% trans "Number of years" %}</strong></td>
-    <td>{{prod_costST}} {{currency}} </td>
+    <td>{{prod_costST}}</td>
  </tr>
 </table>
 <br><br>
 </div>
 <hr>
+<br><br>
+
+<h3 style="text-align: left; padding-left: 20px;">Data visualization</h3>
+
+<div class="col-sm-12">
+Select an indicator:<br>
+     <select id="cars">
+          <option value='pop_size'>Total population</option>
+          <option value='pop_growth'>Population growth</option>
+          <option value='gdp'>Gross domestic product</option>
+          <option value='life_exp'>Life expectancy</option>
+          <option value='literacy'>Literacy rate</option>
+     </select>
+</div>
+
+<br>
+
+<div class="col-sm-12">
+Select a country:<br>
+     <select id="cars">
+          {% for country in country_ids %}
+               <option value={{country.1}}>{{country.1}}</option>
+          {% endfor %}
+     </select>
+</div>
+
+<br><br>
 <br><br>
 
 <!-- Dummy charts -->
@@ -99,6 +137,15 @@
 <body>
      <div id="donutchart" style="width: 900px; height: 500px;"></div>
 </body>
+
+
+
+<hr>
+
+
+
+
+
 
 
 <!-- Scripts -->
