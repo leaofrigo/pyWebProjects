@@ -19,8 +19,10 @@ from webPyAPI_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^$', views.index,name='index'),
+    re_path(r'^$', views.index_page,name='index_page'),
     re_path(r'^get_data_API',views.get_data_API,name='get_data_API'),
+    re_path(r'^about',views.about_page,name='about_page'),
+    re_path(r'^code',views.code_page,name='code_page'),
 
     #re_path(r'^webPyAPI_app/',include('webPyAPI_app.urls')),
 
