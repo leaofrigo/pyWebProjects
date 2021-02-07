@@ -20,34 +20,32 @@
 
 <html>
 {% load i18n %}
-
 <head>
      <meta charset="utf-8">
      <title>webPyAPI</title>
+     <!-- link to remote/online CSS styles  -->
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+     <!-- style section could be located in an CSS file  -->
      <style>
           table {
                font-family: arial, sans-serif;
                border-collapse: collapse;
                width: 80%;
           }
-
           td,
           th {
                border: 1px solid #dddddd;
                text-align: left;
                padding: 8px;
           }
-
           table.center {
                margin-left: auto;
                margin-right: auto;
           }
-
           tr:nth-child(even) {
                background-color: #dddddd;
           }
-
           .button {
                background-color: #4CAF50;
                /* Green */
@@ -61,17 +59,14 @@
                margin: auto;
                cursor: pointer;
           }
-
           select {
                width: 250px;
                margin: 10px;
           }
-
           select:focus {
                min-width: 150px;
                width: auto;
           }
-
           <meta name="viewport"content="width=device-width, initial-scale=1"><style>* {
                box-sizing: border-box;
           }
@@ -80,13 +75,11 @@
                margin: 0;
                font-family: Arial, Helvetica, sans-serif;
           }
-
           .header {
                overflow: hidden;
                background-color: #18191A;
                padding: 5px 10px;
           }
-
           .header a {
                float: left;
                color: white;
@@ -97,26 +90,21 @@
                line-height: 25px;
                border-radius: 4px;
           }
-
           .header a.logo {
                font-size: 25px;
                font-weight: bold;
           }
-
           .header a:hover {
                background-color: #ddd;
                color: black;
           }
-
           .header a.active {
                background-color: dodgerblue;
                color: white;
           }
-
           .header-right {
                float: right;
           }
-
           @media screen and (max-width: 500px) {
                .header a {
                     float: none;
@@ -128,7 +116,6 @@
                     float: none;
                }
           }
-
           .accordion {
                background-color: #eee;
                color: #444;
@@ -141,12 +128,10 @@
                font-size: 15px;
                transition: 0.4s;
           }
-
           .active,
           .accordion:hover {
                background-color: #ccc;
           }
-
           .panel {
                padding: 0 18px;
                display: none;
@@ -154,9 +139,10 @@
                overflow: hidden;
           }
      </style>
-
+     <link rel="shortcut icon" href="#">
 </head>
 
+<!-- static header section  -->
 <div class="header">
      <a href="">webPyAPI</a>
      <div class="header-right">
@@ -165,73 +151,85 @@
           <a href="/about">About</a>
      </div>
 </div>
-
 <br>
 
+<!-- jumbotron structure  -->
 <div class="jumbotron">
      <h1 style="text-align: left; padding-left: 20px;">{% trans "webPyAPI" %}</h1>
      <p style="text-align: left; padding-left: 20px;">{% trans " Project for handling and visualization of World Bank API data" %}</p>
 </div>
 
+
+<!-- accordion structure 01  -->
 <button class="accordion"><strong>Information</strong></button>
 <div class="panel">
      <br><br>
-
      <div style="text-align: left; padding-left: 20px;">
-
-          <h3> API small application tutorial</h3>
+          <h3> API application tutorial</h3>
           <br>
           <br>
-          1) How to get data through an Python and API (World Bank)<br>
-          2) How to read, filter and store dataset<br>
+          This website is a short and simple project to describe:
+          <br><br>
+          1) How to get data through a Python and an API (World Bank)<br>
+          2) How to read and manipulate API datasets<br>
           3) How to develop a simple website using Django<br>
-          4) Display plots on website<br>
+          4) How to display queried data as plots on website<br>
      </div>
      <br><br>
 </div>
-
 <br><br>
 
+<!-- accordion structure 02  -->
 <button class="accordion"><strong>Get data</strong></button>
 <div class="panel">
      <br><br>
-
      <div class="col-sm-12">
           Select an indicator:<br>
-          <select id="selection">
+          <select id="menu_indicator">
                <option value='select'></option>
-               <option value='pop_size'>Total population</option>
-               <option value='pop_growth'>Population growth</option>
-               <option value='gdp'>Gross domestic product</option>
-               <option value='life_exp'>Life expectancy</option>
-               <option value='literacy'>Literacy rate</option>
+               <option value='SP.POP.TOTL'>Total population</option>
+               <option value='SP.POP.GROW'>Population growth</option>
+               <option value='EN.POP.DNST'>Population density</option>
+               <option value='AG.SRF.TOTL.K2'>Land area</option>
+               <option value='NY.GNP.MKTP.PP.CD'>GDP</option>
           </select>
      </div>
-
      <br>
-
      <div class="col-sm-12">
           Select a country:<br>
-          <select id="country">
+          <select id="menu_country">
                {% for country in country_ids %}
-               <option value={{country.1}}>{{country.1}}</option>
+                    <option value={{country.1}}>{{country.1}}</option>
                {% endfor %}
           </select>
           <br><br>
-          <input type="button" class="button" value="Get data">
-
+          <input type="button" class="button" onclick="createUrl()" value="Get data">
      </div>
+</div>
+<br><br>
+
+<!-- accordion structure 03  -->
+<button class="accordion"><strong>Code section</strong></button>
+<div class="panel">
+     <br><br>
+     In the code section all main scripts used are briefly presented: <br><br>
+     <a href="/code">Code section</a>
 </div>
 
 <br><br>
 
+<!-- accordion structure 04  -->
 <button class="accordion"><strong>World Bank API service</strong></button>
 <div class="panel">
      <br><br>
+     World Bank has a webpage describing its API structure: <br><br>
      <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/898581-api-basic-call-structures">Query structure</a>
 </div>
 <br><br>
 
+
+<!-- js scripts -->
+<!-- accordion functionality script -->
 <script>
      var acc = document.getElementsByClassName("accordion");
      var i;
@@ -247,6 +245,19 @@
                }
           });
      }
+</script>
+
+<!-- get value from dropdown menus and send parameter to Python via URL-->
+<script>
+function createUrl()
+{
+     var selectCountryTmp = document.getElementById("menu_country");
+     var selectCountry = selectCountryTmp.value;
+     var selectIndicatorTmp = document.getElementById("menu_indicator");
+     var selectIndicator = selectIndicatorTmp.value;
+     console.log(selectCountry,selectIndicator);
+     window.location.assign("check_data/?country="+selectCountry+"&indicator="+selectIndicator);
+}
 </script>
 
 </html>

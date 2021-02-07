@@ -1,8 +1,8 @@
 from django.shortcuts import render
+import requests
 
 # # views to render home page template
 def index_page(request):
-    import requests
     # url to get metadata
     url_meta='http://api.worldbank.org/v2/sources/2/country/data?format=json'
     meta=requests.get(url_meta).json()
@@ -32,27 +32,41 @@ def about_page(request):
 def code_page(request):
     return render(request,'webPyAPI_app/code.html')
 
-# # views to get API data
-def get_data_API(request):
-    import requests
+def check_data(request):
+    country_url = request.GET.get('country')
+    indicator_url = request.GET.get('indicator')
+    context = {'country':country_url,'indicator':indicator_url}
 
-    # url to get metadata
-    url_meta='http://api.worldbank.org/v2/sources/2/country/data?format=json'
-    meta=requests.get(url_meta).json()
+    # string to organize:
+    # http://api.worldbank.org/v2/country/BRA/indicator/SP.POP.TOTL?format=json
 
-    # number of countries in DB
-    nr_cnt=meta['total']
+    # # url to get metadata
+    # url_meta='http://api.worldbank.org/v2/sources/2/country/data?format=json'
+    # meta=requests.get(url_meta).json()
+    #
+    # # number of countries in DB
+    # nr_cnt=meta['total']
+    #
+    # # create precise url string for API
+    # url_nr_cnt='http://api.worldbank.org/v2/sources/2/country/data?format=json&per_page=%s' % (nr_cnt)
+    # countries=requests.get(url_nr_cnt).json()
+    #
+    # # country ids
+    # country_ids=[]
+    # for i in range(0,nr_cnt):
+    #     c_id = countries['source'][0]['concept'][0]['variable'][i]['id']
+    #     c_name = countries['source'][0]['concept'][0]['variable'][i]['value']
+    #     country_ids.append([c_id,c_name])
 
-    # create precise url string for API
-    url_nr_cnt='http://api.worldbank.org/v2/sources/2/country/data?format=json&per_page=%s' % (nr_cnt)
-    countries=requests.get(url_nr_cnt).json()
 
-    # country ids
-    country_ids=[]
-    for i in range(0,nr_cnt):
-        c_id = countries['source'][0]['concept'][0]['variable'][i]['id']
-        c_name = countries['source'][0]['concept'][0]['variable'][i]['value']
-        country_ids.append([c_id,c_name])
 
-    context = {'country_ids':country_ids,'numb_countries':nr_cnt}
-    return render(request,'webPyAPI_app/index.html',context)
+
+
+
+    return render(request,'webPyAPI_app/check_data.html',context)
+
+def test_template(request):
+    country_url = request.GET.get('country')
+    indicator_url = request.GET.get('indicator')
+    context = {'country':country_url,'indicator':indicator_url}
+    return render(request,'webPyAPI_app/test_template.html',context)
