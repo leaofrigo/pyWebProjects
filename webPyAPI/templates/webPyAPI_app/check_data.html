@@ -156,6 +156,9 @@
                background-color: white;
                overflow: hidden;
           }
+
+     </style>
+     <link rel="shortcut icon"href="#">
      </style>
 </head>
 
@@ -163,7 +166,7 @@
 <div class="header">
      <a href="">webPyAPI</a>
      <div class="header-right">
-          <a class="active" href="">Home</a>
+          <a href="/">Home</a>
           <a href="/code">Code</a>
           <a href="/about">About</a>
      </div>
@@ -189,9 +192,9 @@
           </tr>
           <tr>
                <td><strong>{% trans "Country" %}</strong></td>
-               <td>{{country}}</td>
+               <td>{{country_name}}</td>
                <td><strong>{% trans "Country code" %}</strong></td>
-               <td>{{country_code}}</td>
+               <td>{{country}}</td>
           </tr>
           <tr>
                <td><strong>{% trans "Initial year" %}</strong></td>
@@ -201,7 +204,7 @@
           </tr>
           <tr>
                <td><strong>{% trans "Number of entries" %}</strong></td>
-               <td>{{numb_rows}}</td>
+               <td>{{data_rows}}</td>
                <td><strong>{% trans "Type of data" %}</strong></td>
                <td>JSON</td>
           </tr>
@@ -210,78 +213,54 @@
 </div>
 <hr>
 <br><br>
+<br><br>
 
-<br>
+{{ list_results |json_script:"list_results" }}
 
-<!-- dummy charts -->
+<!-- chart 01 -->
 <div class='container'>
+     <body>
+          <div id="curve_chart" style="width: 900px; height: 500px"></div>
+     </body>
+</div>
 
-<body>
-     <div id="curve_chart" style="width: 900px; height: 500px"></div>
-</body>
-
-<body>
-     <div id="donutchart" style="width: 900px; height: 500px;"></div>
-</body>
+<!-- csv file download section -->
+<div>
+     <h3> Download CSV file </H3>
 </div>
 
 <!-- Scripts -->
-<!-- Dummy chart 1 -->
+<!-- chart 1 -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
+     <script type="text/javascript">
      google.charts.load('current', {
           'packages': ['corechart']
      });
      google.charts.setOnLoadCallback(drawChart);
-
      function drawChart() {
-          var data = google.visualization.arrayToDataTable([
-               ['Year', 'Sales', 'Expenses'],
-               ['2004', 1000, 400],
-               ['2005', 1170, 460],
-               ['2006', 660, 1120],
-               ['2007', 1030, 540]
-          ]);
+          api_data=JSON.parse(document.getElementById('list_results').textContent)
+          api_data.reverse()
+          var header=['Year', 'Indicator']
+          api_data.unshift(header)
+
+
+
+          var data = new google.visualization.arrayToDataTable(api_data);
           var options = {
-               title: 'Dummy line chart',
-               curveType: 'function',
-               legend: {
-                    position: 'bottom'
-               }
+            title: '',
+            curveType: 'function',
+            legend: { position: 'top' },
+            hAxis: {
+                title: 'Year',
+                format: '0000',
+                   },
+             vAxis: {
+                title: 'Indicator'
+                   },
+
           };
           var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
           chart.draw(data, options);
-     }
+        }
 </script>
-
-<!-- dummy chart 2 -->
-     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js">
-</script>
-
-<script type="text/javascript">
-     google.charts.load("current", {
-          packages: ["corechart"]
-     });
-     google.charts.setOnLoadCallback(drawChart);
-
-     function drawChart() {
-          var data = google.visualization.arrayToDataTable([
-               ['Task', 'Hours per Day'],
-               ['Work', 11],
-               ['Eat', 2],
-               ['Commute', 2],
-               ['Watch TV', 2],
-               ['Sleep', 7]
-          ]);
-
-          var options = {
-               title: 'My Daily Activities',
-               pieHole: 0.4,
-          };
-
-          var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-          chart.draw(data, options);
-     }
-</script>
-
 </html>
