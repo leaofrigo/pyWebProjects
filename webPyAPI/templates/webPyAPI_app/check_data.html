@@ -180,7 +180,7 @@
 </div>
 
 
-<h3 style="text-align: left; padding-left: 20px;">Data overview</h3>
+<h3 style="text-align: left; padding-left: 100px;">Data overview</h3>
 <br>
 <div class="col-sm-12">
      <table style=margin-left:auto;margin-right:auto;">
@@ -210,23 +210,20 @@
           </tr>
      </table>
      <br><br>
+     <a style="text-align: left; padding-left: 189px;" href="{{url_csv_data}}">Click here to download CSV file</a></p>
 </div>
-<hr>
-<br><br>
-<br><br>
-
+<!-- send data from python object to jscript -->
 {{ list_results |json_script:"list_results" }}
-
+{{ indicator |json_script:"indicator_name" }}
+     <br><br>
+     <hr>
+     <br><br>
 <!-- chart 01 -->
+<h3 style="text-align: left; padding-left: 100px;">Data plot</h3>
 <div class='container'>
      <body>
           <div id="curve_chart" style="width: 900px; height: 500px"></div>
      </body>
-</div>
-
-<!-- csv file download section -->
-<div>
-     <h3> Download CSV file </H3>
 </div>
 
 <!-- Scripts -->
@@ -239,12 +236,10 @@
      google.charts.setOnLoadCallback(drawChart);
      function drawChart() {
           api_data=JSON.parse(document.getElementById('list_results').textContent)
+          indicator=JSON.parse(document.getElementById('indicator_name').textContent)
           api_data.reverse()
           var header=['Year', 'Indicator']
           api_data.unshift(header)
-
-
-
           var data = new google.visualization.arrayToDataTable(api_data);
           var options = {
             title: '',
@@ -255,7 +250,7 @@
                 format: '0000',
                    },
              vAxis: {
-                title: 'Indicator'
+                title: indicator
                    },
 
           };

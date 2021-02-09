@@ -24,6 +24,7 @@ urlpatterns = [
     re_path(r'^code',views.code_page,name='code_page'),
     re_path(r'^check_data',views.check_data,name='check_data'),
     re_path(r'^test_template',views.test_template,name='test_template'),
+    re_path(r'^generate_csv',views.generate_csv,name='generate_csv'),
 
     #re_path(r'^webPyAPI_app/',include('webPyAPI_app.urls')),
 
