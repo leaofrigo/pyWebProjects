@@ -66,7 +66,7 @@ def check_data(request):
     context['list_results']=(list_results)
     # # url to generate csv feature
     # # for local
-    url_csv_data='generate_csv/?country=%s&indicator=%s' % (country_url,indicator_url)
+    url_csv_data='/generate_csv/?country=%s&indicator=%s' % (country_url,indicator_url)
 
     context['url_csv_data']=(url_csv_data)
     return render(request,'webPyAPI_app/check_data.html',context)
