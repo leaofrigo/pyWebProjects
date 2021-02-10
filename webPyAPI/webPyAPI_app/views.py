@@ -65,7 +65,9 @@ def check_data(request):
        list_results.append([data[1][i]['date'],data[1][i]['value']])
     context['list_results']=(list_results)
     # # url to generate csv feature
-    url_csv_data='http://127.0.0.1:8000/generate_csv/?country=%s&indicator=%s' % (country_url,indicator_url)
+    # # for local
+    url_csv_data='generate_csv/?country=%s&indicator=%s' % (country_url,indicator_url)
+
     context['url_csv_data']=(url_csv_data)
     return render(request,'webPyAPI_app/check_data.html',context)
 
