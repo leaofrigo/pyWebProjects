@@ -38,4 +38,4 @@ Thumbs.db
 
 # Secret settings #
 ######################
-secret_settings.py
+*secret_settings.*
