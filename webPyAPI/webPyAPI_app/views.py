@@ -92,9 +92,11 @@ def generate_csv(request):
     results.to_csv(path_or_buf=response,sep=';',float_format='%.2f',index=False,decimal=",")
     return response
 
-
 def test_template(request):
     country_url = request.GET.get('country')
     indicator_url = request.GET.get('indicator')
     context = {'country':country_url,'indicator':indicator_url}
     return render(request,'webPyAPI_app/test_template.html',context)
+
+def converter(request):
+    return render(request,'webPyAPI_app/converter.html')
