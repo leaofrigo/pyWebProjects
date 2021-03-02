@@ -243,17 +243,4 @@
      }
 </script>
 
-<!-- get value from dropdown menus and send parameter to Python via URL-->
-<script>
-function createUrl()
-{
-     var selectCountryTmp = document.getElementById("menu_country");
-     var selectCountry = selectCountryTmp.value;
-     var selectIndicatorTmp = document.getElementById("menu_indicator");
-     var selectIndicator = selectIndicatorTmp.value;
-     console.log(selectCountry,selectIndicator);
-     window.location.assign("check_data/?country="+selectCountry+"&indicator="+selectIndicator);
-}
-</script>
-
 </html>
