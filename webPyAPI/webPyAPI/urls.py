@@ -26,6 +26,8 @@ urlpatterns = [
     re_path(r'^check_data',views.check_data,name='check_data'),
     re_path(r'^test_template',views.test_template,name='test_template'),
     re_path(r'^generate_csv',views.generate_csv,name='generate_csv'),
+    re_path(r'^wordcloud',views.wordcloud,name='wordcloud'),
+    re_path(r'^get_wordcloud',views.get_wordcloud,name='get_wordcloud'),
 
     #re_path(r'^webPyAPI_app/',include('webPyAPI_app.urls')),
 

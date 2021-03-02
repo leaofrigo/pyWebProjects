@@ -100,3 +100,54 @@ def test_template(request):
 
 def converter(request):
     return render(request,'webPyAPI_app/converter.html')
+
+
+# # views to render code page template
+def wordcloud(request):
+    return render(request,'webPyAPI_app/wordcloud.html')
+
+# # views to render code page template
+def get_wordcloud(request):
+    # install required libs
+    # pip install wordcloud
+    # pip install stop-words
+
+    # import libs
+    from wordcloud import WordCloud
+    import matplotlib as mpl
+    import matplotlib.pyplot as plt
+    from stop_words import get_stop_words
+
+    # open txt file and read it into a variable
+    #text2read=open('tmp/text2read.txt','r').read()
+
+    # words to be ignored
+    # language selection get through html string
+    language = request.GET.get('language')
+    # language selection get through html string
+    text2read = str(request.GET.get('text'))
+    stopwords = get_stop_words(language)
+
+    # instantiate a word cloud object
+    text_wc = WordCloud(
+        background_color='white',
+        max_words=100,
+        width=1600,
+        height=800,
+        stopwords=stopwords
+    )
+
+    # generate the word cloud
+    text_wc.generate(text2read)
+
+    # display the word cloud
+    plt.figure( figsize=(20,10), facecolor='k')
+    plt.imshow(text_wc, interpolation='bilinear')
+    plt.axis('off')
+    plt.tight_layout(pad=0)
+    plt.savefig('tmp/text_wc.png')
+    plt.close()
+
+    # serve image to download
+    image_data = open('tmp/text_wc.png', mode='rb').read()
+    return HttpResponse(image_data, content_type="image/png")
