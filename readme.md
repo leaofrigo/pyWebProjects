@@ -1,4 +1,4 @@
-# pyAPI
+# pyWebProjects
 
 Objective: Python/Django/HTML/Javascript small applications tutorial
 
